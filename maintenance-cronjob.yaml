@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cleanup-job
+  namespace: maintenance-cronjobs  # Replace with your namespace
+spec:
+  schedule: "0 2 * * *"  # This schedule runs the job at 2:00 AM every day
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cleanup
+            image: busybox  # Replace with an appropriate image
+            command:
+            - /bin/sh
+            - -c
+            - "echo 'Running cleanup tasks'; # add your cleanup commands here"
+          restartPolicy: OnFailure

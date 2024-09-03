@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cleanup-job
+  namespace: maintenance-cronjobs
+spec:
+  schedule: "0 0 * * *"  # Schedule for running the job (e.g., daily at midnight)
+  suspend: true          # Set this to true to suspend the CronJob
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cleanup-container
+            image: my-cleanup-image:latest  # Specify your image here
+            args:
+            - /bin/sh
+            - -c
+            - "echo Hello, World!"          # Replace with your actual command
+          restartPolicy: OnFailure
